@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.6
+
+- Fix AirPrint cross-VLAN on iPhone: use host Avahi instead of container Avahi
+  - Container's own Avahi/dbus daemons removed; CUPS now registers with the HAOS host's Avahi via `host_dbus: true`
+  - Printer advertised under `homeassistant.local` which resolves correctly on all devices and VLANs
+  - Eliminates dual mDNS stack conflict that caused standalone hostname resolution to fail on iOS
+
 ## 0.2.5
 
 - Fix AirPrint cross-VLAN on iPhone: disable IPv6 in Avahi mDNS
