@@ -1,6 +1,0 @@
-#!/command/with-contenv bash
-# Wait for D-Bus socket to be ready (avahi needs it)
-until [ -e /var/run/dbus/system_bus_socket ]; do
-    sleep 1
-done
-exec avahi-daemon --no-drop-root --no-chroot

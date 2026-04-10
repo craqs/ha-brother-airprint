@@ -11,17 +11,7 @@ if [ -d /data ]; then
 fi
 
 # Ensure runtime directories exist
-mkdir -p /var/run/dbus
-mkdir -p /var/run/avahi-daemon
 mkdir -p /run/cups
-
-# Restrict Avahi to the physical network interface only.
-# Without this, Avahi advertises the printer on Docker/veth interfaces,
-# causing iPhones to resolve the printer hostname to an unreachable IP.
-IFACE=$(ip route show default 0.0.0.0/0 | awk '{print $5; exit}')
-if [ -n "$IFACE" ]; then
-    sed -i "/^\[server\]/a allow-interfaces=${IFACE}" /etc/avahi/avahi-daemon.conf
-fi
 
 # Update admin password from addon options if bashio is available
 if command -v bashio &>/dev/null; then
