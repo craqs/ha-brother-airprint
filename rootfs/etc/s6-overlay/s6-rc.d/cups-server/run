@@ -1,0 +1,9 @@
+#!/command/with-contenv bash
+ulimit -n 1048576 2>/dev/null || true
+
+# Wait for Avahi to be ready
+until [ -e /var/run/avahi-daemon/socket ]; do
+    sleep 1
+done
+
+exec cupsd -f

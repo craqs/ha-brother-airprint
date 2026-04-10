@@ -1,0 +1,62 @@
+#include <tunables/global>
+
+profile brother-airprint flags=(attach_disconnected,mediate_deleted) {
+  #include <abstractions/base>
+
+  capability net_admin,
+  capability net_raw,
+  capability setgid,
+  capability setuid,
+  capability chown,
+  capability fowner,
+  capability dac_override,
+  capability dac_read_search,
+
+  # Network access for CUPS and Avahi
+  network inet stream,
+  network inet dgram,
+  network inet6 stream,
+  network inet6 dgram,
+  network netlink raw,
+
+  # USB device access
+  /dev/bus/usb/** rw,
+  /dev/usb/** rw,
+  /sys/bus/usb/** r,
+  /sys/devices/**/usb*/** r,
+
+  # CUPS and Avahi runtime
+  /run/cups/** rw,
+  /run/avahi-daemon/** rw,
+  /run/dbus/** rw,
+  /var/run/cups/** rw,
+  /var/run/avahi-daemon/** rw,
+  /var/run/dbus/** rw,
+
+  # Brother driver files
+  /opt/brother/** rix,
+  /etc/opt/brother/** r,
+
+  # QEMU for i386 emulation
+  /usr/bin/qemu-i386-static rix,
+  /usr/libexec/qemu-binfmt/** rix,
+  /lib/i386-linux-gnu/** mr,
+  /usr/lib/i386-linux-gnu/** mr,
+
+  # Persistent data
+  /data/** rw,
+
+  # Temporary files
+  /tmp/** rw,
+
+  # System libraries and binaries
+  /usr/sbin/cupsd rix,
+  /usr/sbin/avahi-daemon rix,
+  /usr/bin/dbus-daemon rix,
+  /usr/lib/** mr,
+  /lib/** mr,
+
+  # Proc and sys access
+  /proc/** r,
+  /sys/** r,
+}
