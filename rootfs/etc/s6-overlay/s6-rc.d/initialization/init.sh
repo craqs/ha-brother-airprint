@@ -23,12 +23,9 @@ if [ -n "$IFACE" ]; then
     sed -i "/^\[server\]/a allow-interfaces=${IFACE}" /etc/avahi/avahi-daemon.conf
 fi
 
-# Ensure DNSSDHostName is set in persisted cupsd.conf.
-# This makes CUPS advertise the printer under homeassistant.local (which resolves
-# on all devices) instead of the container's hostname (which may not resolve cross-VLAN).
-if [ -f /etc/cups/cupsd.conf ] && ! grep -q "^DNSSDHostName" /etc/cups/cupsd.conf; then
-    sed -i '/^ServerAlias/a DNSSDHostName homeassistant' /etc/cups/cupsd.conf
-fi
+# Remove DNSSDHostName from persisted config (if leftover from older version).
+# CUPS now inherits the hostname from Avahi (set to homeassistant in avahi-daemon.conf).
+sed -i '/^DNSSDHostName/d' /etc/cups/cupsd.conf 2>/dev/null || true
 
 # Update admin password from addon options if bashio is available
 if command -v bashio &>/dev/null; then
