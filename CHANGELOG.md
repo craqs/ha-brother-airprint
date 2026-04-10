@@ -1,12 +1,11 @@
 # Changelog
 
-## 0.2.11
+## 0.2.12
 
-- Fix AirPrint cross-VLAN on iPhone: use HA host's UUID as Avahi hostname
-  - Container's default hostname doesn't resolve cross-VLAN (UniFi mDNS reflection limitation)
-  - Dynamically detects HA host's UUID hostname via Supervisor API at startup
-  - Sets Avahi hostname to UUID so DNS-SD SRV records point to a resolvable hostname
-  - `publish-addresses=no` prevents conflict with host's mDNS for that hostname
+- Fix AirPrint cross-VLAN on iPhone: static Avahi service file with custom hostname
+  - Static service file advertises printer under `homeassistant.siesta` (resolvable from all VLANs)
+  - Disabled CUPS DNS-SD auto-registration (replaced by static Avahi service)
+  - Registers both `_ipp._tcp` and `_ipps._tcp` services for full AirPrint compatibility
 
 ## 0.2.5
 
