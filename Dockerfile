@@ -7,7 +7,9 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN apt-get update && apt-get install -y --no-install-recommends \
     cups \
     cups-pdf \
-    libavahi-client3 \
+    avahi-daemon \
+    avahi-utils \
+    libnss-mdns \
     dbus \
     colord \
     a2ps \
@@ -52,7 +54,7 @@ RUN useradd --groups sudo,lp,lpadmin --create-home \
     && sed -i '/%sudo[[:space:]]/ s/ALL[[:space:]]*$/NOPASSWD:ALL/' /etc/sudoers
 
 # Create required runtime directories
-RUN mkdir -p /run/cups
+RUN mkdir -p /var/run/dbus /var/run/avahi-daemon /run/cups
 
 # Copy rootfs overlay
 COPY rootfs /
