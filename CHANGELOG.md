@@ -1,11 +1,13 @@
 # Changelog
 
-## 0.2.12
+## 0.3.0
 
-- Fix AirPrint cross-VLAN on iPhone: static Avahi service file with custom hostname
-  - Static service file advertises printer under `homeassistant.siesta` (resolvable from all VLANs)
-  - Disabled CUPS DNS-SD auto-registration (replaced by static Avahi service)
-  - Registers both `_ipp._tcp` and `_ipps._tcp` services for full AirPrint compatibility
+- Reset Avahi/CUPS configuration to match proven working reference addon
+  - Reverted all custom Avahi tweaks (interface restriction, IPv6 disable, hostname overrides, static service files)
+  - Restored `BrowseLocalProtocols all` and `Browsing Yes` in CUPS
+  - Simplified avahi-daemon startup (no --no-drop-root --no-chroot flags)
+  - Added `homeassistant_api: true` to match reference config
+  - Init script ensures persisted cupsd.conf gets correct browse settings on upgrade
 
 ## 0.2.5
 

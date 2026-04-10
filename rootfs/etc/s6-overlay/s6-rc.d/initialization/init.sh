@@ -15,22 +15,15 @@ mkdir -p /var/run/dbus
 mkdir -p /var/run/avahi-daemon
 mkdir -p /run/cups
 
-# Restrict Avahi to the physical network interface only.
-# Without this, Avahi advertises the printer on Docker/veth interfaces,
-# causing iPhones to resolve the printer hostname to an unreachable IP.
-IFACE=$(ip route show default 0.0.0.0/0 | awk '{print $5; exit}')
-if [ -n "$IFACE" ]; then
-    sed -i "/^\[server\]/a allow-interfaces=${IFACE}" /etc/avahi/avahi-daemon.conf
+# Force-update persisted cupsd.conf to current version's settings.
+# This ensures BrowseLocalProtocols and Browsing are correct after upgrades.
+if [ -f /etc/cups/cupsd.conf ]; then
+    sed -i '/^DNSSDHostName/d' /etc/cups/cupsd.conf
+    sed -i '/^BrowseLocalProtocols/d' /etc/cups/cupsd.conf
+    sed -i 's/^Browsing.*/Browsing Yes/' /etc/cups/cupsd.conf
+    grep -q "^BrowseLocalProtocols" /etc/cups/cupsd.conf || \
+        sed -i '/^Browsing Yes/a BrowseLocalProtocols all' /etc/cups/cupsd.conf
 fi
-
-# Migrate persisted cupsd.conf: disable CUPS DNS-SD (now handled by static Avahi service file).
-sed -i '/^DNSSDHostName/d' /etc/cups/cupsd.conf 2>/dev/null || true
-sed -i '/^BrowseLocalProtocols/d' /etc/cups/cupsd.conf 2>/dev/null || true
-sed -i 's/^Browsing Yes/Browsing No/' /etc/cups/cupsd.conf 2>/dev/null || true
-
-# Clean up stale Avahi hostname overrides from older versions.
-sed -i '/^host-name=/d' /etc/avahi/avahi-daemon.conf 2>/dev/null || true
-sed -i '/^publish-addresses=/d' /etc/avahi/avahi-daemon.conf 2>/dev/null || true
 
 # Update admin password from addon options if bashio is available
 if command -v bashio &>/dev/null; then
