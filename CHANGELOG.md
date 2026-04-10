@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.5
+
+- Fix AirPrint cross-VLAN on iPhone: disable IPv6 in Avahi mDNS
+  - iOS prefers IPv6 but ULA addresses (fd::/8) are often not routable between VLANs
+  - Avahi now only advertises IPv4, ensuring iPhones connect to the correct routable IP
+- Fix Avahi crash on startup: wait for D-Bus socket before starting
+
 ## 0.2.4
 
 - Fix AirPrint on iPhone: restrict Avahi to physical network interface only
