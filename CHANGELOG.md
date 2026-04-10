@@ -1,10 +1,12 @@
 # Changelog
 
-## 0.2.10
+## 0.2.11
 
-- Revert homeassistant.local hostname approach (resolved to wrong IP on the network)
-- Restore container's own Avahi hostname with correct A record publishing
-- Keep avahi-utils for diagnostics
+- Fix AirPrint cross-VLAN on iPhone: use HA host's UUID as Avahi hostname
+  - Container's default hostname doesn't resolve cross-VLAN (UniFi mDNS reflection limitation)
+  - Dynamically detects HA host's UUID hostname via Supervisor API at startup
+  - Sets Avahi hostname to UUID so DNS-SD SRV records point to a resolvable hostname
+  - `publish-addresses=no` prevents conflict with host's mDNS for that hostname
 
 ## 0.2.5
 
