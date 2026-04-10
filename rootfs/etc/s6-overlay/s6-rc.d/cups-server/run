@@ -1,10 +1,8 @@
 #!/command/with-contenv bash
 ulimit -n 1048576 2>/dev/null || true
 
-# Wait for host Avahi to be reachable via D-Bus (host_dbus: true mounts host socket)
-until dbus-send --system --dest=org.freedesktop.Avahi --print-reply \
-    /org/freedesktop/Avahi org.freedesktop.Avahi.Server.GetVersionString \
-    >/dev/null 2>&1; do
+# Wait for Avahi to be ready
+until [ -e /var/run/avahi-daemon/socket ]; do
     sleep 1
 done
 
