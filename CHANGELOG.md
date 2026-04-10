@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.4
+
+- Fix AirPrint on iPhone: restrict Avahi to physical network interface only
+  - Avahi was advertising the printer on Docker/veth interfaces, causing iPhones to resolve an unreachable IP
+  - Auto-detects the default route interface at startup
+
 ## 0.2.3
 
 - Fix CUPS rejecting Ingress requests (400 Bad Request) due to external Host header
