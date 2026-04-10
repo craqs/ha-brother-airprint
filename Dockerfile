@@ -58,3 +58,5 @@ RUN mkdir -p /var/run/dbus /var/run/avahi-daemon
 COPY rootfs /
 
 EXPOSE 631
+
+ENTRYPOINT ["/init"]
