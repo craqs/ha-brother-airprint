@@ -15,6 +15,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     procps \
     sudo \
     locales \
+    nginx \
     && rm -rf /var/lib/apt/lists/*
 
 # Enable i386 architecture and install qemu + i386 runtime libraries

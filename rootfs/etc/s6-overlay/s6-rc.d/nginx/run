@@ -1,0 +1,7 @@
+#!/command/with-contenv bash
+# Wait for CUPS to be ready
+until curl -s -o /dev/null http://127.0.0.1:631/; do
+    sleep 1
+done
+
+exec nginx -c /etc/nginx/nginx.conf

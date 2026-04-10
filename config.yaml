@@ -1,10 +1,14 @@
 name: "Brother AirPrint"
-version: "0.1.1"
+version: "0.2.0"
 slug: brother-airprint
 description: "CUPS print server with original Brother HL-1110 driver and AirPrint support"
 url: "https://github.com/craqs/ha-brother-airprint"
 arch:
   - aarch64
+ingress: true
+ingress_port: 8099
+panel_icon: mdi:printer
+panel_title: Brother Printer
 usb: true
 host_network: true
 ports:
