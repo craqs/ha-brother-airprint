@@ -1,5 +1,26 @@
 # Changelog
 
+## 0.2.3
+
+- Fix CUPS rejecting Ingress requests (400 Bad Request) due to external Host header
+
+## 0.2.2
+
+- Fix Ingress iframe embedding blocked by CUPS security headers
+- Widen Ingress proxy IP allowlist to cover full HA network subnet
+
+## 0.2.0
+
+- Add Home Assistant Ingress support for CUPS web interface
+- CUPS web UI accessible from the HA sidebar ("Brother Printer")
+- nginx reverse proxy with URL rewriting for Ingress compatibility
+
+## 0.1.1
+
+- Fix addon startup: permissive AppArmor profile
+- Add explicit ENTRYPOINT for s6-overlay
+- Restore init: false for s6-overlay PID 1 requirement
+
 ## 0.1.0
 
 - Initial release
