@@ -24,8 +24,10 @@ if [ -n "$IFACE" ]; then
 fi
 
 # Remove DNSSDHostName from persisted config (if leftover from older version).
-# CUPS now inherits the hostname from Avahi (set to homeassistant in avahi-daemon.conf).
 sed -i '/^DNSSDHostName/d' /etc/cups/cupsd.conf 2>/dev/null || true
+
+# Remove stale host-name override from persisted avahi config (if leftover from older version).
+sed -i '/^host-name=/d' /etc/avahi/avahi-daemon.conf 2>/dev/null || true
 
 # Update admin password from addon options if bashio is available
 if command -v bashio &>/dev/null; then
