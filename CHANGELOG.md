@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.3.6
+
+- Harden CUPS access control: admin panel requires password, printing open to all private networks
+  - `/admin` and admin endpoints require Basic auth (`@SYSTEM` user)
+  - Root `/` location open for printing from all RFC1918 subnets (10/8, 172.16/12, 192.168/16)
+  - Replaced `@LOCAL` with explicit RFC1918 ranges to support cross-VLAN printing
+
 ## 0.3.5
 
 - Fix cupsd.conf not applied on upgrade: always overwrite from image
