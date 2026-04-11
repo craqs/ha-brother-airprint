@@ -1,5 +1,5 @@
 name: "Brother AirPrint"
-version: "0.3.5"
+version: "0.3.6"
 slug: brother-airprint
 description: "CUPS print server with original Brother HL-1110 driver and AirPrint support"
 url: "https://github.com/craqs/ha-brother-airprint"
