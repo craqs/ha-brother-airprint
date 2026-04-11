@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.3.5
+
+- Fix cupsd.conf not applied on upgrade: always overwrite from image
+  - Persisted `/data/cups` kept stale cupsd.conf across addon updates
+  - Init script now copies image's cupsd.conf to persisted data on every startup
+  - Printer definitions (printers.conf, ppd/, ssl/) are still preserved
+- Open CUPS access to all network clients (fixes cross-VLAN "Forbidden" errors)
+  - `DefaultAuthType None`, `Allow from all` on all locations
+
 ## 0.3.0
 
 - Reset Avahi/CUPS configuration to match proven working reference addon
